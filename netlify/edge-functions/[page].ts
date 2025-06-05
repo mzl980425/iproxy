@@ -1,7 +1,10 @@
 
 export default async (req: Request) => {
   return new Response(
-    JSON.stringify(Deno.version)
+    {
+      version: JSON.stringify(Deno.version),
+      createHttpClient: typeof Deno.createHttpClient,
+    }
   );
   /*
   try {
