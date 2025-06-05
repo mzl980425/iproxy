@@ -1,3 +1,5 @@
+import axios, { AxiosRequestConfig } from "axios";
+
 export default async (req: Request) => {
   try {
     const reqUrl = new URL(req.url);
@@ -12,28 +14,35 @@ export default async (req: Request) => {
       reqHeaders.delete("host");
       reqHeaders.delete("origin");
 
-      const options: RequestInit & { client?: any } = {
+      const options: AxiosRequestConfig = {
         method: req.method,
-        body: req.body,
-        headers: reqHeaders,
-        signal: AbortSignal.timeout(10 * 1000),
-        client: undefined,
+        headers: Object.fromEntries(reqHeaders),
+        data: req.body,
+        responseType: "stream",
       };
 
       // get a proxy
       if (needProxy) {
-        const proxy = await fetch(Deno.env.get("PROXY_API")!).then((res) =>
-          res.text()
-        );
+        const proxy = await fetch(
+          "http://api.dmdaili.com/dmgetip.asp?apikey=6a0bf61f&pwd=400e52b5aef21b2c9cb728f99705803c&getnum=1&httptype=0&geshi=1&fenge=1&fengefu=&Contenttype=1&operate=all&setcity=all&provin=zhejiang"
+        ).then((res) => res.text());
         if (typeof proxy !== "string" || !/\d+\.\d+.\d+.\d+\:\d+/.test(proxy)) {
           throw new Error("No usable proxy.");
         }
-        options.client = Deno.createHttpClient({
-          proxy: { url: `http://${proxy}` },
-        });
+        console.log("using proxy: ", proxy);
+        options.proxy = {
+          host: proxy.split(":")[0],
+          port: Number(proxy.split(":")[1]),
+        };
       }
 
-      const response = await fetch(url, options);
+      const axiosResponse = await axios(url, options);
+      const response = new Response(axiosResponse.data, {
+        status: axiosResponse.status,
+        statusText: axiosResponse.statusText,
+        // @ts-ignore
+        headers: axiosResponse.headers,
+      });
 
       // set response headers
       const resHeaders = new Headers(response.headers);
