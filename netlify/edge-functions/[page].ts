@@ -18,7 +18,7 @@ export default async (req: Request) => {
         method: req.method,
         headers: Object.fromEntries(reqHeaders),
         data: req.body,
-        responseType: "stream",
+        // responseType: "stream",
       };
 
       // get a proxy
