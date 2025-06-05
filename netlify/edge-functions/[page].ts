@@ -1,6 +1,9 @@
 import axios, { type AxiosRequestConfig } from "axios";
-import HttpProxyAgent from "http-proxy-agent";
-import HttpsProxyAgent from "https-proxy-agent";
+import HttpProxyAgentDefault from "http-proxy-agent";
+import HttpsProxyAgentDefault from "https-proxy-agent";
+
+const { HttpProxyAgent } = HttpProxyAgentDefault;
+const { HttpsProxyAgent } = HttpsProxyAgentDefault;
 
 export default async (req: Request) => {
   try {
