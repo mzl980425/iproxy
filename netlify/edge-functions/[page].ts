@@ -13,5 +13,5 @@ export default (request: Request, context: any) => {
 };
 
 export const config = {
-  path: ["/", "/:url", "/~/:url"],
+  path: ["/", "/*"],
 };
