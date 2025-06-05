@@ -1,11 +1,11 @@
 
 export default async (req: Request) => {
-  return new Response(
+  return new Response(JSON.stringify(
     {
       version: JSON.stringify(Deno.version),
       createHttpClient: typeof Deno.createHttpClient,
     }
-  );
+  ));
   /*
   try {
     const proxy = await fetch(
