@@ -1,21 +1,7 @@
-import axios, { type AxiosRequestConfig } from "axios";
-import HttpProxyAgentDefault, { HttpProxyAgent } from "http-proxy-agent";
-import HttpsProxyAgentDefault, { HttpsProxyAgent } from "https-proxy-agent";
 
 export default async (req: Request) => {
   return new Response(
-    JSON.stringify({
-      HttpProxyAgentDefault,
-      HttpProxyAgentDefaultKeys: Object.keys(HttpProxyAgentDefault),
-      HttpProxyAgentDefaultType: typeof HttpProxyAgentDefault,
-      HttpsProxyAgentDefault,
-      HttpsProxyAgentDefaultKeys: Object.keys(HttpsProxyAgentDefault),
-      HttpsProxyAgentDefaultType: typeof HttpsProxyAgentDefault,
-      HttpProxyAgent,
-      HttpsProxyAgent,
-      HttpProxyAgentType: typeof HttpProxyAgent,
-      HttpsProxyAgentType: typeof HttpsProxyAgent,
-    })
+    JSON.stringify(Deno.version)
   );
   /*
   try {
