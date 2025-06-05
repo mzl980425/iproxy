@@ -1,11 +1,23 @@
 import axios, { type AxiosRequestConfig } from "axios";
-import HttpProxyAgentDefault from "http-proxy-agent";
-import HttpsProxyAgentDefault from "https-proxy-agent";
-
-const { HttpProxyAgent } = HttpProxyAgentDefault;
-const { HttpsProxyAgent } = HttpsProxyAgentDefault;
+import HttpProxyAgentDefault, { HttpProxyAgent } from "http-proxy-agent";
+import HttpsProxyAgentDefault, { HttpsProxyAgent } from "https-proxy-agent";
 
 export default async (req: Request) => {
+  return new Response(
+    JSON.stringify({
+      HttpProxyAgentDefault,
+      HttpProxyAgentDefaultKeys: Object.keys(HttpProxyAgentDefault),
+      HttpProxyAgentDefaultType: typeof HttpProxyAgentDefault,
+      HttpsProxyAgentDefault,
+      HttpsProxyAgentDefaultKeys: Object.keys(HttpsProxyAgentDefault),
+      HttpsProxyAgentDefaultType: typeof HttpsProxyAgentDefault,
+      HttpProxyAgent,
+      HttpsProxyAgent,
+      HttpProxyAgentType: typeof HttpProxyAgent,
+      HttpsProxyAgentType: typeof HttpsProxyAgent,
+    })
+  );
+  /*
   try {
     const proxy = await fetch(
       "http://api.dmdaili.com/dmgetip.asp?apikey=6a0bf61f&pwd=400e52b5aef21b2c9cb728f99705803c&getnum=1&httptype=0&geshi=1&fenge=1&fengefu=&Contenttype=1&operate=all&setcity=all&provin=zhejiang"
@@ -36,6 +48,7 @@ export default async (req: Request) => {
   } catch (e) {
     return new Response("Error: " + e.message);
   }
+  */
 };
 
 export const config = {
